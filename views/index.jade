@@ -1,12 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  form(method='post', action='/data')
+  div(class='container')
+    if title
+      h1= title
+    form(method='post', action='/data')
+      div(class='form-group col-xs-12 col-md-6')
+        input(type='text', class='form-control', name='mail', placeholder="Enter E-Mail")
+      div(class='form-group col-xs-12 col-md-6')
+        input(type='text', class='form-control', name='phone', placeholder="Enter phone number")
+      div(class='form-group col-xs-12 col-md-6')
+        button(type='submit', class='btn btn-primary') Submit
+  div(class='container')
     div(class='form-group col-xs-12 col-md-6')
-      input(type='text', class='form-control', name='mail', placeholder="Enter E-Mail")
-    div(class='form-group col-xs-12 col-md-6')
-      input(type='text', class='form-control', name='phone', placeholder="Enter phone number")
-    div(class='form-group col-xs-12 col-md-6')
-      button(type='submit', class='btn btn-primary') Submit
+      a(href='/download' class='btn btn-primary ') Download file
+
