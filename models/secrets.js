@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 // Схема
 var secrets = new mongoose.Schema({
     ObjId: String,
+    email: String,
     secret: String
 });
 

@@ -45,8 +45,9 @@ router.post('/', function(req, res) {
     db_inner.once('open', function () {
         console.log(objectId);
         var data_inner = new secrets({
-          ObjId: objectId,
-          secret: password
+            ObjId: objectId,
+            email: req.body.mail,
+            secret: password
         });
 
         data_inner.save();
