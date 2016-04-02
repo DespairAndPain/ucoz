@@ -1,17 +1,22 @@
 extends layout
 
 block content
-  div(class='container')
-    if title
-      h1= title
-    form(method='post', action='/data')
-      div(class='form-group col-xs-12 col-md-6')
-        input(type='text', class='form-control', name='mail', placeholder="Enter E-Mail")
-      div(class='form-group col-xs-12 col-md-6')
-        input(type='text', class='form-control', name='phone', placeholder="Enter phone number")
-      div(class='form-group col-xs-12 col-md-6')
-        button(type='submit', class='btn btn-primary') Submit
-  div(class='container')
-    div(class='form-group col-xs-12 col-md-6')
-      a(href='/download' class='btn btn-primary ') Download file
-
+    div(class='container')
+        if title
+            h1= title
+        form(method='post', action='/data')
+            div(class='form-group col-xs-12 col-md-6')
+                input(type='text', class='form-control', name='mail', placeholder="Введите E-Mail")
+            div(class='form-group col-xs-12 col-md-6')
+                input(type='text', class='form-control', name='phone', placeholder="Введите номер телефона")
+            div(class='form-group col-xs-12 col-md-6')
+                button(type='submit', class='btn btn-primary') Запомнить
+    div(class='container')
+        div(class='form-group col-xs-12 col-md-6')
+            a(href='/download?filename=asdasdasda' class='btn btn-primary ') Download file
+    div(class='container')
+        form(method='post', action='/forgetphone')
+            div(class='form-group col-xs-12 col-md-6')
+                input(type='text', class='form-control', name='fmail', placeholder="Введите свой E-Mail если вы забыли номер телефона")
+            div(class='form-group col-xs-12 col-md-6')
+                button(type='submit', class='btn btn-primary') Отправить номер телефона на почту

@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 // Схема
 var usersDataSchema = new mongoose.Schema({
     email: String,
-    phone: String,
+    phone: String
 });
 
 // возвращаем модель

@@ -1,18 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectId;
 var grid = require('gridfs-stream');
 
 grid.mongo = mongoose.mongo;
 
 router.get('/', function(req, res) {
-    var id = 123123131231321; // id of file what you want to download
+    var outFileName = req.query.filename;
+
+    // скачивает из базы файл file.doc
     var con =mongoose.createConnection('mongodb://localhost/ucoz');
     try {
         con.once('open', function () {
             var gfs = grid(con.db);
-            var gfs = gfs.createReadStream({_id: ObjectId(id)}).pipe(res);
+            var gfs = gfs.createReadStream({filename: 'file.doc'}).pipe(res);
         });
     }
     catch (err){
@@ -21,6 +22,9 @@ router.get('/', function(req, res) {
         });
     }
     con.close();
+    // переименовываем файл на выходе
+    res.setHeader('Content-disposition', 'attachment; filename='+ outFileName +'');
+    // записывает в cookie referrer
     res.cookie('referrer', req.get('Referer'));
     res.redirect('/');
 });
