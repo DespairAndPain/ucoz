@@ -38,7 +38,7 @@ router.post('/', function(req, res) {
     db =mongoose.createConnection('mongodb://localhost/secrets');
     // достаём из базы секретов по эмайлу ключ с помощью которого шифровали данные
     db.once('open', function () {
-        var _cryptData =  secrets.find({email: req.body.femail});
+        var _cryptData =  secrets.find({email: req.body.fmail});
         setData(_cryptData);
         mongoose.connection.close();
     });
