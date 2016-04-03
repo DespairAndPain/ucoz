@@ -37,6 +37,8 @@ router.post('/', function(req, res) {
     
     // запись щифрованных данных в базу клиентов
     var db =mongoose.createConnection('mongodb://localhost/ucoz');
+    db.on('error', console.error.bind(console, 'connection error:'));
+
     db.once('open', function () {
         var data = new usersData({
             email: _email,
@@ -45,11 +47,13 @@ router.post('/', function(req, res) {
         
         data.save();
         setObjectId(data._id);
+        mongoose.connection.close();
     });
-    db.close();
     
     // запись ключа шифрования, objectId записанного объекта и эмайла в базу шифров
     var db_inner = mongoose.createConnection('mongodb://localhost/secrets');
+    db.on('error', console.error.bind(console, 'connection error:'));
+
     db_inner.once('open', function () {
         var data_inner = new secrets({
             ObjId: objectId,
@@ -58,8 +62,8 @@ router.post('/', function(req, res) {
         });
 
         data_inner.save();
+        mongoose.connection.close();
     });
-    db_inner.close();
 
     res.render('index', {title: 'Data saved'});
 });

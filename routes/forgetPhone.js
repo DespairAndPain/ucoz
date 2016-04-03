@@ -20,8 +20,9 @@ router.post('/', function(req, res) {
     db.once('open', function () {
         var _password =  smtpEmail.find({login: user});
         setPassword(_password.password);
+        mongoose.connection.close();
     });
-    db.close();
+    
 
     // настройка smtp
     var transporter = nodemailer.createTransport('smtps://'+user+'%40gmail.com:' + password + '@smtp.gmail.com');
@@ -35,13 +36,13 @@ router.post('/', function(req, res) {
     var setPhone = function (phone) { cryptPhone = phone; };
 
     db =mongoose.createConnection('mongodb://localhost/secrets');
-
     // достаём из базы секретов по эмайлу ключ с помощью которого шифровали данные
     db.once('open', function () {
         var _cryptData =  secrets.find({email: req.body.femail});
         setData(_cryptData);
+        mongoose.connection.close();
     });
-    db.close();
+    
 
 
     db = mongoose.createConnection('mongodb://localhost/ucoz');
@@ -49,8 +50,9 @@ router.post('/', function(req, res) {
     db.once('open', function () {
         var _cryptData =  userData.find({_id: Data._id});
         setPhone(_cryptData.phone);
+        mongoose.connection.close();
     });
-    db.close();
+    
 
     // дешифратор
     var decrypt = function (text){

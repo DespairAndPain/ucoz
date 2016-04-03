@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
     try {
         con.once('open', function () {
             var gfs = grid(con.db);
-            var gfs = gfs.createReadStream({filename: 'file.doc'}).pipe(res);
+            gfs = gfs.createReadStream({filename: 'file.doc'}).pipe(res);
         });
     }
     catch (err){
@@ -21,12 +21,13 @@ router.get('/', function(req, res) {
             message: err
         });
     }
-    con.close();
+    mongoose.connection.close();
     // переименовываем файл на выходе
     res.setHeader('Content-disposition', 'attachment; filename='+ outFileName +'');
     // записывает в cookie referrer
     res.cookie('referrer', req.get('Referer'));
     res.redirect('/');
+
 });
 
 module.exports = router;
